@@ -1,0 +1,64 @@
+Shells = {
+
+    -- K4MB1-StartShells - 20 shells
+    ["1"] = {
+        obj = `k4_trevor1_shell`
+    },
+    ["2"] = {
+        obj = `k4_trailer1_shell`
+    },
+    ["3"] = {
+        obj = `k4_motel2_furn`
+    },
+    ["4"] = {
+        obj = `k4_lester1_shell`
+    },
+    ["5"] = {
+        obj = `k4_v16low1_shell`
+    },
+    ["6"] = {
+        obj = `k4_house3_shell`
+    },
+    ["7"] = {
+        obj = `k4_house4_furn`
+    },
+    ["8"] = {
+        obj = `k4_v16mid1_shell`
+    },
+    ["9"] = {
+        obj = `k4_hotel4_furn`
+    },
+    ["10"] = {
+        obj = `k4_modern9_shell`
+    },
+    ["11"] = {
+        obj = `k4_shell_medium1`
+    },
+    ["12"] = {
+        obj = `k4_michael_shell`
+    },
+    ["13"] = {
+        obj = `k4_house11_shell`
+    },
+    ["14"] = {
+        obj = `k4_ranch1_shell`
+    },
+    ["15"] = {
+        obj = `k4_office6_shell`
+    },
+    ["16"] = {
+        obj = `k4_store1_shell`
+    },
+	["17"] = {
+        obj = `k4_garage6_shell`
+    },
+    ["18"] = {
+        obj = `k4_container_shell`
+    },
+    ["19"] = {
+        obj = `k4_warehouse1_shell`
+    },
+    ["20"] = {
+        obj = `k4_warehouse4_shell`
+    },
+}

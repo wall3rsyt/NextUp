@@ -1,0 +1,25 @@
+--return {
+	-- Alle locaties en vending machines zijn verwijderd om de shops uit te schakelen.
+	-- ox_inventory blijft werken, maar er worden geen winkels meer gespawned.
+
+	--General = {
+	--	name = 'Winkel',
+	--	blip = { id = 59, colour = 69, scale = 0.8 },
+	--	inventory = {},
+	--	locations = {},
+		--targets = {}
+--	},
+--
+--	Liquor = {
+	--	name = 'Winkel',
+	--	blip = { id = 59, colour = 69, scale = 0.8 },
+	--	inventory = {},
+		--locations = {},
+	--	targets = {}
+	--},
+
+	--VendingMachineDrinks = {
+	--	name = 'Vending Machine',
+	--	inventory = {},
+	--	model = {}
+--	}

@@ -1,0 +1,11 @@
+{
+  "_comment_": "High player count servers may suffer from performance issues since iterating over all players is expensive. Make adjustments as needed",
+
+  "loop_delays": {
+    "_comment_": "All delays are in milliseconds",
+    "save_logs": 10000,
+    "jail_coordinate_check": 5000
+  },
+
+  "show_only_nodejs_cpu_usage": true
+}

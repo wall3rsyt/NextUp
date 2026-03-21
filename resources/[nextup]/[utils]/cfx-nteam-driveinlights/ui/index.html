@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive-In Controller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container" class="hidden">
+        <div class="panel">
+            <div class="header">
+                <h2 id="titleText">Drive-In Light Controller</h2>
+                <button id="closeBtn" class="close-btn">&times;</button>
+            </div>
+            
+            <div class="content">
+                <div class="switch-container">
+                    <span class="switch-label" id="switchLabelText">Lights Status</span>
+                    <div class="switch-wrapper">
+                        <span class="switch-text off" id="switchOffText">OFF</span>
+                        <label class="switch">
+                            <input type="checkbox" id="propsToggle">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="switch-text on" id="switchOnText">ON</span>
+                    </div>
+                </div>
+                
+                <div class="info">
+                    <p><span id="totalLightsText">Total Lights:</span> <span class="highlight">8</span></p>
+                    <p><span id="statusLabelText">Status:</span> <span id="statusText" class="highlight">Active</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Config Panel -->
+    <div id="configContainer" class="hidden">
+        <div class="config-panel">
+            <div class="header">
+                <h2 id="configTitleText">UI Configuration</h2>
+                <button id="configCloseBtn" class="close-btn">&times;</button>
+            </div>
+            
+            <div class="config-content">
+                <div class="config-section">
+                    <h3>Text Settings</h3>
+                    <div class="input-group">
+                        <label>Title:</label>
+                        <input type="text" id="configTitle" placeholder="Drive-In Light Controller">
+                    </div>
+                    <div class="input-group">
+                        <label>Switch Label:</label>
+                        <input type="text" id="configSwitchLabel" placeholder="Lights Status">
+                    </div>
+                    <div class="input-group">
+                        <label>Switch OFF Text:</label>
+                        <input type="text" id="configSwitchOff" placeholder="OFF">
+                    </div>
+                    <div class="input-group">
+                        <label>Switch ON Text:</label>
+                        <input type="text" id="configSwitchOn" placeholder="ON">
+                    </div>
+                    <div class="input-group">
+                        <label>Total Lights Label:</label>
+                        <input type="text" id="configTotalLightsLabel" placeholder="Total Lights:">
+                    </div>
+                    <div class="input-group">
+                        <label>Status Label:</label>
+                        <input type="text" id="configStatusLabel" placeholder="Status:">
+                    </div>
+                    <div class="input-group">
+                        <label>Status Active Text:</label>
+                        <input type="text" id="configStatusActive" placeholder="Active">
+                    </div>
+                    <div class="input-group">
+                        <label>Status Inactive Text:</label>
+                        <input type="text" id="configStatusInactive" placeholder="Inactive">
+                    </div>
+                </div>
+                
+                <div class="config-section">
+                    <h3>Color Settings</h3>
+                    <div class="input-group">
+                        <label>Title Color:</label>
+                        <input type="color" id="configTitleColor" value="#f8fafc">
+                    </div>
+                    <div class="input-group">
+                        <label>Switch OFF Color:</label>
+                        <input type="color" id="configSwitchOffColor" value="#ef4444">
+                    </div>
+                    <div class="input-group">
+                        <label>Switch ON Color:</label>
+                        <input type="color" id="configSwitchOnColor" value="#10b981">
+                    </div>
+                    <div class="input-group">
+                        <label>Highlight Color:</label>
+                        <input type="color" id="configHighlightColor" value="#60a5fa">
+                    </div>
+                    <div class="input-group">
+                        <label>Panel Background Start:</label>
+                        <input type="color" id="configPanelBgStart" value="#1e293b">
+                    </div>
+                    <div class="input-group">
+                        <label>Panel Background End:</label>
+                        <input type="color" id="configPanelBgEnd" value="#334155">
+                    </div>
+                    <div class="input-group">
+                        <label>Header Background Start:</label>
+                        <input type="color" id="configHeaderBgStart" value="#0f172a">
+                    </div>
+                    <div class="input-group">
+                        <label>Header Background End:</label>
+                        <input type="color" id="configHeaderBgEnd" value="#1e293b">
+                    </div>
+                    <div class="input-group">
+                        <label>Info Panel Background:</label>
+                        <input type="color" id="configInfoPanelBg" value="#0f172a">
+                    </div>
+                </div>
+                
+                <div class="config-buttons">
+                    <button id="saveConfigBtn" class="config-btn save">Save Changes</button>
+                    <button id="resetConfigBtn" class="config-btn reset">Reset to Default</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

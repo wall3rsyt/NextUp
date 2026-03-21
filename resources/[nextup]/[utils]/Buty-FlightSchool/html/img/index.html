@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+      <link rel="stylesheet" href="style.css" />
+   </head>
+   <body>
+      <div class="slider">
+         <div class="slider-inner">
+            <div class="tab mid">
+               <img src="BACKGROUND COMP.png" alt="" class="bg" />
+               <div class="header">
+                  <img src="SIMBOL.png" alt="" />
+                  <h1><span>FLIGHT</span> LICENSE</h1>
+                  <div class="divider"></div>
+               </div>
+               <div class="license left">
+                  <img src="BACKGROUND.png" alt="" class="bg" />
+                  <img class="license-img" src="AIRPLANE_IMG.png" alt="" />
+                  <div class="title">AIRPLANE</div>
+                  <div class="price">PRICE: <span>$10.000</span></div>
+                  <div class="divider"></div>
+                  <p class="description">
+                     With Airplanes you will be able to work as an aeroplane pilot, as well as access to the magnificent
+                     Airplane Dealership.
+                  </p>
+                  <div class="button" onclick="selectLicense('AIRPLANE')">SELECT</div>
+               </div>
+               <div class="license right">
+                  <img src="BACKGROUND.png" alt="" class="bg" />
+                  <img class="license-img" src="HELICOPTER_IMG.png" alt="" />
+                  <div class="title">HELICOPTER</div>
+                  <div class="price">PRICE: <span>$10.000</span></div>
+                  <div class="divider"></div>
+                  <p class="description">
+                     With Helicopters you can pick up and buy helicopters and do different tasks..
+                  </p>
+                  <div class="button" onclick="selectLicense('HELICOPTER')">SELECT</div>
+               </div>
+
+               <div class="license-popup">
+                  <div class="img-container">
+                     <img src="MAIN BACKGROUND.png" alt="" />
+                     <div class="title license-title">AIRPLANE</div>
+                  </div>
+                  <div class="button" onclick="selectExamType('THEORATICAL')">THEORATICAL TEST</div>
+                  <div class="bottom theoratical-icon">
+                     <div class="price">PRICE: <span>$10.000</span></div>
+                     <img class="yes" src="APPROVED.png" alt="" />
+                     <img class="no" src="SUSPENSED.png" alt="" />
+                  </div>
+                  <div class="divider"></div>
+                  <div class="button" onclick="selectExamType('PRACTICAL')">PRACTICAL TEST</div>
+                  <div class="bottom practical-icon">
+                     <div class="price">PRICE: <span>$10.000</span></div>
+                     <img class="yes" src="APPROVED.png" alt="" />
+                     <img class="no" src="SUSPENSED.png" alt="" />
+                  </div>
+               </div>
+
+               <div class="exam-popup">
+                  <img src="BACKGROUND (1).png" alt="" class="bg" />
+                  <p class="description">You will be charged <span>$10.000</span></p>
+                  <div class="description-2">Shall we start the exam?</div>
+                  <div class="buttons">
+                     <div class="button" onclick="startExam()">YES</div>
+                     <div class="button" onclick="hideExamPopup()">NO</div>
+                  </div>
+               </div>
+            </div>
+            <div class="tab top">
+               <img src="BACKGROUND COMP.png" alt="" class="bg" />
+               <div class="header">
+                  <img src="SIMBOL.png" alt="" />
+                  <div class="right">
+                     <h1><span>FLIGHT</span> LICENSE</h1>
+                     <div class="divider"></div>
+                  </div>
+               </div>
+               <div class="question">
+                  <img src="BACKGROUND (2).png" alt="" />
+                  <div class="title"><span>1</span> QUESTION</div>
+                  <div class="divider"></div>
+                  <div class="description">
+                     When making an emergency landing, how do you proceed if the aircraft engines are not working?
+                  </div>
+               </div>
+               <div class="choices">
+                  <img class="bgg" src="Fondo de Imagen.png" alt="" />
+                  <div class="choice a" onclick="showSuccess()">Get nervous and punch the pilot.</div>
+                  <div class="choice b">Get nervous and punch the pilot.</div>
+                  <div class="choice c">Get nervous and punch the pilot.</div>
+
+                  <div class="bottom">
+                     <img src="IMG.png" alt="" />
+                     <div class="timer">TIME: <span>04:40</span></div>
+                     <div class="questions">
+                        <div class="question correct">1</div>
+                        <div class="question false">2</div>
+                        <div class="question">3</div>
+                        <div class="question">4</div>
+                        <div class="question">5</div>
+                        <div class="question">6</div>
+                        <div class="question">7</div>
+                        <div class="question">8</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="tab bottom">
+               <div class="header">
+                  <img src="BACKGROUND (3).png" alt="" class="bgg" />
+                  <div class="left">
+                     <div class="head">
+                        <div class="title">1 MISSION</div>
+                        <div class="divider"></div>
+                     </div>
+                     <img src="SIMBOL.png" alt="" />
+                  </div>
+                  <div class="right">Land the aircraft properly.</div>
+               </div>
+
+               <div class="fails">
+                  <img src="BACKGROUND (4).png" alt="" class="bgg" />
+                  <div class="title">FAILS</div>
+
+                  <div class="value" onclick="showFail()">1/5</div>
+               </div>
+            </div>
+            <div class="tab left">
+               <img src="BACKGROUND COMP.png" alt="" class="bg" />
+               <div class="header">
+                  <img src="SIMBOL.png" alt="" />
+                  <div class="right">
+                     <h1><span>FLIGHT</span> LICENSE</h1>
+                     <div class="divider"></div>
+                  </div>
+               </div>
+
+               <div class="container">
+                  <img src="COLOUR BACKGROUND.png" alt="" class="bgg" />
+                  <div class="result">
+                     <img src="IMG BACKGROUND.png" alt="" />
+                     <div class="main">
+                        <img src="BACKGROUND (5).png" alt="" class="bggg" />
+                        <div class="title">CONGRATULATIONS!</div>
+                        <div class="divider"></div>
+                        <div class="description">You have passed the test.</div>
+                     </div>
+                  </div>
+                  <div class="button">ACCEPT</div>
+               </div>
+            </div>
+            <div class="tab right">
+               <img src="BACKGROUND COMP.png" alt="" class="bg" />
+               <div class="header">
+                  <img src="SIMBOL.png" alt="" />
+                  <div class="right">
+                     <h1><span>FLIGHT</span> LICENSE</h1>
+                     <div class="divider"></div>
+                  </div>
+               </div>
+
+               <div class="container">
+                  <img src="COLOUR BACKGROUND.png" alt="" class="bgg" />
+                  <div class="result">
+                     <img src="IMG BACKGROUND.png" alt="" />
+                     <div class="main">
+                        <img src="BACKGROUND (5).png" alt="" class="bggg" />
+                        <div class="title">YOU HAVE FAILED!</div>
+                        <div class="divider"></div>
+                        <div class="description">You did not pass the test.</div>
+                     </div>
+                  </div>
+                  <div class="button">ACCEPT</div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script src="script.js"></script>
+   </body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NextUp RP — Loading</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-radial"></div>
+
+  <div class="glitch-lines">
+    <div class="glitch-line" style="top:23%;--dur:7s;--delay:0s"></div>
+    <div class="glitch-line" style="top:51%;--dur:11s;--delay:3s"></div>
+    <div class="glitch-line" style="top:78%;--dur:9s;--delay:5s"></div>
+  </div>
+
+  <div class="city">
+    <svg viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="cityGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#00f5c4" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#7b5cfa" stop-opacity="0.03"/>
+        </linearGradient>
+      </defs>
+      <g fill="url(#cityGrad)" stroke="rgba(0,245,196,0.12)" stroke-width="0.5">
+        <rect x="0" y="280" width="40" height="120"/><rect x="10" y="240" width="20" height="40"/>
+        <rect x="45" y="300" width="30" height="100"/><rect x="80" y="220" width="50" height="180"/>
+        <rect x="90" y="190" width="15" height="30"/><rect x="135" y="260" width="35" height="140"/>
+        <rect x="175" y="200" width="60" height="200"/><rect x="195" y="170" width="10" height="30"/>
+        <rect x="240" y="310" width="25" height="90"/><rect x="270" y="250" width="45" height="150"/>
+        <rect x="320" y="180" width="55" height="220"/><rect x="325" y="150" width="20" height="30"/>
+        <rect x="380" y="270" width="40" height="130"/><rect x="425" y="230" width="50" height="170"/>
+        <rect x="480" y="290" width="30" height="110"/><rect x="515" y="200" width="65" height="200"/>
+        <rect x="530" y="160" width="15" height="40"/><rect x="585" y="260" width="35" height="140"/>
+        <rect x="625" y="190" width="55" height="210"/><rect x="635" y="160" width="12" height="30"/>
+        <rect x="685" y="310" width="25" height="90"/><rect x="715" y="230" width="50" height="170"/>
+        <rect x="770" y="200" width="60" height="200"/><rect x="780" y="165" width="15" height="35"/>
+        <rect x="835" y="270" width="40" height="130"/><rect x="880" y="180" width="70" height="220"/>
+        <rect x="890" y="150" width="20" height="30"/><rect x="955" y="260" width="30" height="140"/>
+        <rect x="990" y="220" width="55" height="180"/><rect x="1050" y="300" width="35" height="100"/>
+        <rect x="1090" y="210" width="50" height="190"/><rect x="1145" y="260" width="40" height="140"/>
+        <rect x="1190" y="190" width="60" height="210"/><rect x="1255" y="280" width="30" height="120"/>
+        <rect x="1290" y="230" width="50" height="170"/><rect x="1345" y="200" width="55" height="200"/>
+        <rect x="1405" y="270" width="35" height="130"/>
+      </g>
+      <g opacity="0.5">
+        <rect x="183" y="215" width="4" height="4" fill="#00f5c4"/>
+        <rect x="335" y="195" width="3" height="3" fill="#ff3c6e"/>
+        <rect x="530" y="180" width="4" height="4" fill="#00f5c4"/>
+        <rect x="785" y="185" width="4" height="4" fill="#7b5cfa"/>
+        <rect x="895" y="168" width="3" height="3" fill="#00f5c4"/>
+        <rect x="1105" y="192" width="4" height="4" fill="#ff3c6e"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="layout">
+
+    <!-- LEFT -->
+    <div class="left">
+      <div>
+        <div class="logo-area">
+          <div class="server-tag">
+            <span class="tag-blink"></span>
+            Live server · FiveM Roleplay
+          </div>
+          <div class="logo-title">
+            NEXTUP
+            <div class="glitch-copy">NEXTUP</div>
+          </div>
+          <div class="logo-title logo-sub-title">ROLEPLAY</div>
+          <div class="logo-tagline">Premium Roleplay Experience</div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value" id="stat-players">0</span>
+            <span class="stat-label">Online</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="stat-slots">128</span>
+            <span class="stat-label">Max slots</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">99.9%</span>
+            <span class="stat-label">Uptime</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="live-feed">
+        <div class="feed-header">// LIVE ACTIVITY</div>
+        <div id="feed-container"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+      <div class="panel-label">Connection Status</div>
+
+      <div class="connect-visual">
+        <div class="hex-ring">
+          <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="60,4 112,34 112,86 60,116 8,86 8,34"
+              stroke="rgba(0,245,196,0.3)" stroke-width="1" stroke-dasharray="6 4"/>
+            <polygon points="60,14 102,39 102,81 60,106 18,81 18,39"
+              stroke="rgba(123,92,250,0.2)" stroke-width="0.5"/>
+          </svg>
+          <svg class="ring-reverse" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="60,20 96,41 96,79 60,100 24,79 24,41"
+              stroke="rgba(0,245,196,0.15)" stroke-width="1" stroke-dasharray="3 8"/>
+          </svg>
+          <div class="hex-center"></div>
+        </div>
+        <div class="connect-status">
+          Verbinden met server<span class="connect-dots"></span>
+        </div>
+      </div>
+
+      <div class="panel-label">Server Regels</div>
+      <div class="rules-block">
+        <div class="rule-item" style="animation-delay:0.7s">
+          <span class="rule-num">01</span>
+          <span>Respecteer alle spelers. Toxisch gedrag leidt tot een permanente ban.</span>
+        </div>
+        <div class="rule-item" style="animation-delay:0.85s">
+          <span class="rule-num">02</span>
+          <span>RDM en VDM zijn ten strengste verboden. Altijd RP-reden vereist.</span>
+        </div>
+        <div class="rule-item" style="animation-delay:1.0s">
+          <span class="rule-num">03</span>
+          <span>Gebruik geen mods, cheats of exploits. Zero tolerance policy.</span>
+        </div>
+        <div class="rule-item" style="animation-delay:1.15s">
+          <span class="rule-num">04</span>
+          <span>Blijf altijd in karakter (IRP) tenzij anders aangegeven door staff.</span>
+        </div>
+        <div class="rule-item" style="animation-delay:1.3s">
+          <span class="rule-num">05</span>
+          <span>Meld problemen via Discord — niet in-game bij admins.</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel-label" style="margin-bottom:12px">Volg ons</div>
+        <div class="socials">
+          <div class="social-btn" onclick="window.open('https://discord.gg/jouwlink','_blank')">Discord</div>
+          <div class="social-btn" onclick="window.open('https://jouwwebsite.nl','_blank')">Website</div>
+          <div class="social-btn" onclick="window.open('https://forum.jouwwebsite.nl','_blank')">Forum</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+      <span class="version-tag">v1.0.0 · NextUp RP</span>
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span class="progress-label" id="load-label">INITIALISEREN...</span>
+          <span class="progress-pct" id="load-pct">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+          <div class="progress-shimmer"></div>
+        </div>
+      </div>
+      <div class="key-hint">
+        Druk op <span class="key">F8</span> om te skippen
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

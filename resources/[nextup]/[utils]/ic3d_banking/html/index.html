@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Banking UI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: transparent;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .glass {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.98), rgba(17, 24, 39, 0.95));
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .hover-transform {
+      transition: transform 0.2s;
+    }
+
+    .hover-transform:hover {
+      transform: scale(1.02);
+    }
+
+    input {
+      background: rgba(17, 24, 39, 0.8) !important;
+    }
+
+    .transaction-list {
+      background: rgba(17, 24, 39, 0.6) !important;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.1;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(59, 130, 246, 0.5);
+      border-radius: 3px;
+      transition: all 0.2s ease;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(59, 130, 246, 0.8);
+    }
+
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(59, 130, 246, 0.5) rgba(17, 24, 39, 0.6);
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top-color: #3b82f6;
+      animation: spin 1s ease-in-out infinite;
+      position: relative;
+      z-index: 60;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .slide-up {
+      animation: slideUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #bank-ui,
+    #atm-ui {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #bank-ui.visible,
+    #atm-ui.visible {
+      opacity: 1;
+    }
+  </style>
+
+  <audio id="successSound" src="success.mp3"></audio>
+  <audio id="errorSound" src="error.mp3"></audio>
+</head>
+
+<body class="hidden text-white flex items-center justify-center">
+
+
+  <div id="loading-content" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="bg-gray-900/80 p-8 rounded-xl flex flex-row items-center gap-4">
+  <div class="text-blue-400 font-semibold" id="loading-text">Loading account...</div>
+      <div class="loading-spinner relative static"></div>
+    </div>
+  </div>
+
+
+  <div id="bank-ui" class="max-w-2xl w-full mx-4 p-8 glass rounded-2xl shadow-2xl">
+
+    <div class="flex justify-between items-start mb-8">
+
+      <div class="flex flex-col items-center mb-8">
+        <!-- Logo -->
+        <div class="mb-6">
+          <svg class="w-24 h-24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M4 4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V6C22 4.89543 21.1046 4 20 4H4Z"
+              class="fill-blue-500" />
+            <path
+              d="M12 8C8.69 8 6 9.79 6 12C6 14.21 8.69 16 12 16C15.31 16 18 14.21 18 12C18 9.79 15.31 8 12 8ZM12 14C9.79 14 8 13.21 8 12C8 10.79 9.79 10 12 10C14.21 10 16 10.79 16 12C16 13.21 14.21 14 12 14ZM12 11C10.9 11 10 11.9 10 13C10 14.1 10.9 15 12 15C13.1 15 14 14.1 14 13C14 11.9 13.1 11 12 11Z"
+              class="fill-white" />
+          </svg>
+        </div>
+
+        <!-- Account Info -->
+        <div class="w-full bg-gray-800/30 rounded-lg p-4">
+          <div class="flex items-center gap-3 mb-3">
+            <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+            </svg>
+            <span class="text-gray-300 text-sm" id="label-account-holder">Account Holder:</span>
+            <span class="text-white font-semibold" id="playerName">John Doe</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 6a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zm0 6a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z" />
+            </svg>
+            <span class="text-gray-300 text-sm" id="label-account-number">Account Number:</span>
+            <span class="text-white font-mono font-semibold" id="accountNumber">****-****-1234</span>
+          </div>
+          <div class="mt-3 text-sm text-gray-400" id="welcome-text">Welcome to Los Santos Bank. Your trusted partner in financial services.</div>
+        </div>
+      </div>
+
+
+      <div class="card w-72">
+        <div class="flex justify-between items-center mb-4">
+          <div class="text-xs font-semibold opacity-75" id="card-bank-title">BANK OF LOS SANTOS</div>
+          <svg class="w-8 h-8 text-white/90" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" />
+          </svg>
+        </div>
+  <div class="text-sm font-medium opacity-75 mb-1" id="label-card-balance">Card Balance</div>
+        <div class="text-2xl font-bold mb-6" id="bank">$0</div>
+  <div class="text-sm opacity-75 mb-1" id="label-cash-balance">Cash Balance</div>
+        <div class="text-xl font-bold text-green-300" id="cash">$0</div>
+      </div>
+
+    </div>
+
+
+    <div class="mb-8 space-y-4">
+      <div class="relative">
+        <input id="amount" type="number" placeholder="Enter Amount"
+          class="w-full p-4 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-blue-500 focus:outline-none text-white text-lg" />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <button onclick="bank('deposit')" id="btn-deposit"
+          class="hover-transform bg-gradient-to-r from-green-600 to-green-700 p-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-green-500/20">
+          Deposit
+        </button>
+        <button onclick="bank('withdraw')" id="btn-withdraw"
+          class="hover-transform bg-gradient-to-r from-blue-600 to-blue-700 p-3 rounded-lg font-semibold text-white shadow-lg hover:shadow-blue-500/20">
+          Withdraw
+        </button>
+      </div>
+
+      <div class="flex gap-4">
+        <input id="targetId" type="number" placeholder="Target ID"
+          class="w-1/2 p-4 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-purple-500 focus:outline-none text-white text-lg" />
+        <button onclick="transfer()" id="btn-transfer"
+          class="hover-transform w-1/2 bg-gradient-to-r from-purple-600 to-purple-700 p-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-purple-500/20">
+          Transfer
+        </button>
+      </div>
+    </div>
+
+
+
+    <div class="border-t border-gray-700 pt-6">
+  <h2 class="text-2xl font-bold mb-4 text-gray-200" id="header-account-activity">Account Activity</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-gray-800/30 rounded-lg p-4 h-[200px]">
+          <canvas id="transactionChart"></canvas>
+        </div>
+
+        <div class="bg-gray-800/30 rounded-lg p-4">
+          <h3 class="text-lg font-semibold mb-2" id="header-recent-transactions">Recent Transactions</h3>
+          <ul id="transactions" class="space-y-2 text-sm text-gray-300 max-h-[150px] overflow-y-auto"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute top-4 left-4">
+      <button onclick="closeUI()" class="p-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-500">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+
+  <div id="atm-ui" class="hidden fixed inset-0 flex items-center justify-center z-50">
+
+    <div class="w-96 p-6 glass rounded-xl shadow-xl">
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center">
+          <svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M4 4a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1V5a1 1 0 00-1-1H4zm1 2h10v8H5V6z" />
+            <path fill-rule="evenodd" d="M10 9a1 1 0 100-2 1 1 0 000 2zm0 4a1 1 0 100-2 1 1 0 000 2z" />
+          </svg>
+          <h2 class="ml-2 text-lg font-bold text-white" id="atm-title">ATM</h2>
+        </div>
+        <button onclick="closeATMUI()" class="p-1 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-500">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="mb-6 p-4 bg-gray-800/50 rounded-lg">
+  <div class="text-sm text-gray-400 mb-1" id="label-available-balance">Available Balance</div>
+        <div class="text-2xl font-bold text-white" id="atm-balance">$0</div>
+      </div>
+
+      <div class="mb-4">
+  <label class="block text-sm font-medium text-gray-300 mb-1" id="label-amount">Amount</label>
+        <input id="atm-amount" type="number" placeholder="Enter Amount"
+          class="w-full p-3 rounded-lg bg-gray-800/50 border border-gray-700 focus:border-blue-500 focus:outline-none text-white" />
+      </div>
+
+      <div class="grid grid-cols-1 gap-3" id="atm-buttons">
+        <button onclick="withdrawFromATM()" id="btn-atm-withdraw"
+          class="w-full hover-transform bg-gradient-to-r from-blue-600 to-blue-700 p-3 rounded-lg font-semibold text-white shadow-lg hover:shadow-blue-500/20">
+          Withdraw
+        </button>
+
+        <button id="atm-deposit-btn" onclick="depositToATM()"
+          class="hidden w-full hover-transform bg-gradient-to-r from-green-600 to-green-700 p-3 rounded-lg font-semibold text-white shadow-lg hover:shadow-green-500/20">
+          Deposit
+        </button>
+      </div>
+
+      <div class="mt-4 text-xs text-gray-400 text-center" id="atm-limit"></div>
+    </div>
+  </div>
+
+  <script>
+    function applyLocale(loc) {
+      if (!loc) return;
+      window.currentLocale = loc;
+      // Bank UI labels
+      const bankTitle = loc.bank_title || 'Los Santos Bank';
+      document.title = bankTitle;
+      const loadingText = document.getElementById('loading-text'); if (loadingText) loadingText.textContent = loc.loading_account || 'Loading account...';
+      const holder = document.getElementById('label-account-holder'); if (holder) holder.textContent = (loc.account_holder || 'Account Holder') + ':';
+      const accNum = document.getElementById('label-account-number'); if (accNum) accNum.textContent = (loc.account_number || 'Account Number') + ':';
+      const welcome = document.getElementById('welcome-text'); if (welcome) welcome.textContent = bankTitle;
+      const cardTitle = document.getElementById('card-bank-title'); if (cardTitle) cardTitle.textContent = bankTitle.toUpperCase();
+      const cardBalance = document.getElementById('label-card-balance'); if (cardBalance) cardBalance.textContent = loc.balance || 'Balance';
+      const cashBalance = document.getElementById('label-cash-balance'); if (cashBalance) cashBalance.textContent = (loc.cash || 'Cash');
+      const amountInput = document.getElementById('amount'); if (amountInput) amountInput.placeholder = loc.amount || 'Amount';
+      const targetId = document.getElementById('targetId'); if (targetId) targetId.placeholder = loc.target_id || 'Target ID';
+      const btnDep = document.getElementById('btn-deposit'); if (btnDep) btnDep.textContent = loc.deposit || 'Deposit';
+      const btnWit = document.getElementById('btn-withdraw'); if (btnWit) btnWit.textContent = loc.withdraw || 'Withdraw';
+      const btnTr = document.getElementById('btn-transfer'); if (btnTr) btnTr.textContent = loc.transfer || 'Transfer';
+      const accAct = document.getElementById('header-account-activity'); if (accAct) accAct.textContent = loc.account_activity || 'Account Activity';
+      const recTx = document.getElementById('header-recent-transactions'); if (recTx) recTx.textContent = loc.recent_transactions || 'Recent Transactions';
+      // ATM UI labels
+      const atmTitle = document.getElementById('atm-title'); if (atmTitle) atmTitle.textContent = loc.atm_title || 'ATM';
+      const avail = document.getElementById('label-available-balance'); if (avail) avail.textContent = loc.balance || 'Balance';
+      const amtLbl = document.getElementById('label-amount'); if (amtLbl) amtLbl.textContent = loc.amount || 'Amount';
+      const atmW = document.getElementById('btn-atm-withdraw'); if (atmW) atmW.textContent = loc.withdraw || 'Withdraw';
+      const atmD = document.getElementById('atm-deposit-btn'); if (atmD) atmD.textContent = loc.deposit || 'Deposit';
+    }
+    let errorSoundsEnabled = true;
+
+    function playErrorSound() {
+      if (errorSoundsEnabled) {
+        document.getElementById('errorSound').play();
+      }
+    }
+
+
+    function showLoading() {
+      document.getElementById('loading-content').classList.remove('hidden');
+      document.body.classList.remove('hidden');
+    }
+
+    function hideLoading() {
+      document.getElementById('loading-content').classList.add('hidden');
+    }
+
+    function depositToATM() {
+  const amount = parseInt(document.getElementById('atm-amount').value);
+  if (!amount || amount <= 0) {
+    playErrorSound();
+    return;
+  }
+  
+  fetch(`https://${GetParentResourceName()}/atm:deposit`, {
+    method: 'POST',
+    body: JSON.stringify({ amount })
+  });
+}
+
+   function refreshUI() {
+  fetch(`https://${GetParentResourceName()}/banking:refresh`, {
+    method: 'POST',
+    body: JSON.stringify({})
+  });
+}
+
+    function bank(action) {
+      const amount = parseInt(document.getElementById('amount').value);
+      if (!amount || amount <= 0) {
+        playErrorSound();
+        return;
+      }
+      fetch(`https://${GetParentResourceName()}/banking:${action}`, {
+        method: 'POST',
+        body: JSON.stringify({ amount })
+      }).then((response) => {
+        if (response.ok) {
+          document.getElementById('amount').value = '';
+          refreshUI();
+        }
+      });
+    }
+
+    function transfer() {
+      const amount = parseInt(document.getElementById('amount').value);
+      const targetId = parseInt(document.getElementById('targetId').value);
+      if (!amount || amount <= 0 || !targetId || targetId <= 0) {
+        playErrorSound();
+        return;
+      }
+      if (!targetId || targetId <= 0) {
+        document.getElementById('errorSound').play();
+        return;
+      }
+      fetch(`https://${GetParentResourceName()}/banking:transfer`, {
+        method: 'POST',
+        body: JSON.stringify({ amount, targetId })
+      }).then((response) => {
+        if (response.ok) {
+          //document.getElementById('successSound').play();
+          document.getElementById('amount').value = '';
+          document.getElementById('targetId').value = '';
+          refreshUI();
+        }
+      });
+    }
+
+    function closeUI() {
+      document.body.classList.add('hidden');
+      document.getElementById('bank-ui').style.display = 'none';
+      fetch(`https://${GetParentResourceName()}/banking:close`, {
+        method: 'POST'
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (window.loadingTimeout) {
+          clearTimeout(window.loadingTimeout);
+          window.loadingTimeout = null;
+        }
+
+        if (document.getElementById('loading-content').classList.contains('hidden') === false) {
+
+          hideLoading();
+          document.body.classList.add('hidden');
+
+          if (window.lastInterfaceType === 'atm') {
+            fetch(`https://${GetParentResourceName()}/atm:close`, {
+              method: 'POST'
+            });
+          } else {
+            fetch(`https://${GetParentResourceName()}/banking:close`, {
+              method: 'POST'
+            });
+          }
+        } else if (!document.getElementById('bank-ui').classList.contains('hidden') &&
+          document.getElementById('bank-ui').style.display !== 'none') {
+          closeUI();
+        } else if (!document.getElementById('atm-ui').classList.contains('hidden')) {
+          closeATMUI();
+        }
+      }
+    });
+
+    let chart;
+
+    window.addEventListener('message', (event) => {
+      const data = event.data;
+
+ if (data.type === 'atm:refresh') {
+    
+    document.getElementById('atm-balance').innerText = `$${data.balance.bank.toLocaleString()}`;
+    document.getElementById('atm-amount').value = ''; 
+    
+    const balanceEl = document.getElementById('atm-balance');
+    balanceEl.classList.add('text-green-400');
+    setTimeout(() => {
+      balanceEl.classList.remove('text-green-400');
+    }, 500);
+  }
+
+
+
+ if (data.type === 'banking:refresh') {
+ 
+    document.getElementById('bank').innerText = `$${data.balance.bank.toLocaleString()}`;
+    document.getElementById('cash').innerText = `$${data.balance.cash.toLocaleString()}`;
+    
+    const txList = document.getElementById('transactions');
+    txList.innerHTML = '';
+    
+    data.transactions.forEach(tx => {
+      const typeColors = {
+        deposit: 'text-green-400',
+        withdraw: 'text-blue-400',
+        transfer: 'text-purple-400'
+      };
+      const loc = window.currentLocale || {};
+      const typeLabel = (loc[tx.type] || tx.type).toString();
+      txList.innerHTML += `
+        <li class="flex items-center justify-between p-2 rounded hover:bg-gray-700/50">
+          <span class="flex items-center gap-2">
+            <span class="${typeColors[tx.type]} font-semibold">${typeLabel}</span>
+            <span class="text-gray-400 text-xs whitespace-nowrap">${new Date(tx.timestamp * 1000).toLocaleString('en-US', {
+              month: 'numeric',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: '2-digit',
+              hour12: true
+            })}</span>
+          </span>
+          <span class="font-semibold">$${tx.amount.toLocaleString()} ${tx.target ? `→ ID:${tx.target}` : ''}</span>
+        </li>`;
+    });
+    
+    if (chart && data.transactions.length > 0) {
+      const last7Days = data.transactions.slice(0, 7).reverse();
+      
+      chart.data.labels = last7Days.map(tx => new Date(tx.timestamp * 1000).toLocaleDateString('en-US', {
+        month: 'numeric',
+        day: 'numeric'
+      }));
+      
+      chart.data.datasets[0].data = last7Days.map(tx => tx.type === 'withdraw' ? -tx.amount : tx.amount);
+      chart.update();
+    }
+  }
+
+      if (data.type === 'banking:open') {
+        if (data.locale) applyLocale(data.locale);
+        window.lastInterfaceType = 'bank';
+
+
+        showLoading();
+
+      
+        window.loadingTimeout = setTimeout(() => {
+       
+          hideLoading();
+          document.body.classList.remove('hidden');
+
+          const bankUI = document.getElementById('bank-ui');
+          bankUI.style.display = 'block';
+          bankUI.classList.add('slide-up');
+          document.getElementById('atm-ui').classList.add('hidden');
+
+          document.getElementById('bank').innerText = `$${data.balance.bank.toLocaleString()}`;
+          document.getElementById('cash').innerText = `$${data.balance.cash.toLocaleString()}`;
+
+
+          const txList = document.getElementById('transactions');
+          txList.innerHTML = '';
+
+          const last7Days = data.transactions
+            .slice(0, 7)
+            .reverse();
+
+          const chartData = {
+            labels: last7Days.map(tx => new Date(tx.timestamp * 1000).toLocaleDateString('en-US', {
+              month: 'numeric',
+              day: 'numeric'
+            })),
+            datasets: [{
+              label: (window.currentLocale && window.currentLocale.transaction_amount) || 'Transaction Amount',
+              data: last7Days.map(tx => tx.type === 'withdraw' ? -tx.amount : tx.amount),
+              borderColor: 'rgb(99, 102, 241)',
+              backgroundColor: 'rgba(99, 102, 241, 0.1)',
+              fill: true,
+              tension: 0.4
+            }]
+          };
+
+          if (chart) {
+            chart.destroy();
+          }
+
+          chart = new Chart(document.getElementById('transactionChart'), {
+            type: 'line',
+            data: chartData,
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              aspectRatio: 1.5,
+              scales: {
+                y: {
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  },
+                  ticks: {
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    callback: function (value) {
+                      return '$' + value.toLocaleString();
+                    },
+                    maxTicksLimit: 5
+                  }
+                },
+                x: {
+                  grid: {
+                    display: false
+                  },
+                  ticks: {
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    maxTicksLimit: 4
+                  }
+                }
+              },
+              plugins: {
+                legend: {
+                  display: false
+                }
+              }
+            }
+          });
+
+          data.transactions.forEach(tx => {
+            const typeColors = {
+              deposit: 'text-green-400',
+              withdraw: 'text-blue-400',
+              transfer: 'text-purple-400'
+            };
+            const loc = window.currentLocale || {};
+            const typeLabel = (loc[tx.type] || tx.type).toString();
+            txList.innerHTML += `
+            <li class="flex items-center justify-between p-2 rounded hover:bg-gray-700/50">
+              <span class="flex items-center gap-2">
+                <span class="${typeColors[tx.type]} font-semibold">${typeLabel}</span>
+               <span class="text-gray-400 text-xs whitespace-nowrap">${new Date(tx.timestamp * 1000).toLocaleString('en-US', {
+              month: 'numeric',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: '2-digit',
+              hour12: true
+            })}</span>
+              </span>
+              <span class="font-semibold">$${tx.amount.toLocaleString()} ${tx.target ? `→ ID:${tx.target}` : ''}</span>
+            </li>`;
+          });
+
+          document.getElementById('playerName').innerText = data.playerName || 'Unknown';
+          document.getElementById('accountNumber').innerText = `****-****-${Math.floor(Math.random() * 9000 + 1000)}`;
+        }, 800); // Show loading for 800ms
+      }
+
+
+      if (data.type === 'atm:open') {
+        if (data.locale) applyLocale(data.locale);
+        window.lastInterfaceType = 'atm';
+        showLoading();
+
+        window.loadingTimeout = setTimeout(() => {
+      
+          hideLoading();
+          document.body.classList.remove('hidden');
+          document.getElementById('bank-ui').style.display = 'none';
+
+          const atmUI = document.getElementById('atm-ui');
+          atmUI.classList.remove('hidden');
+          atmUI.classList.add('fade-in');
+
+          document.getElementById('atm-balance').innerText = `$${data.balance.bank.toLocaleString()}`;
+          if (data.atmLimit && data.locale && data.locale.error_atm_limit) {
+            document.getElementById('atm-limit').innerText = data.locale.error_atm_limit.replace('%s', data.atmLimit.toLocaleString());
+          } else if (data.atmLimit) {
+            document.getElementById('atm-limit').innerText = `Maximum withdrawal: $${data.atmLimit.toLocaleString()}`;
+          }
+
+          const depositBtn = document.getElementById('atm-deposit-btn');
+          if (data.atmDeposit) {
+            depositBtn.classList.remove('hidden');
+          } else {
+            depositBtn.classList.add('hidden');
+          }
+        }, 600); 
+      }
+
+      if (data.errorSounds !== undefined) {
+        errorSoundsEnabled = data.errorSounds;
+      }
+
+
+
+    });
+
+
+
+    function closeATMUI() {
+      document.body.classList.add('hidden');
+      document.getElementById('atm-ui').classList.add('hidden');
+      fetch(`https://${GetParentResourceName()}/atm:close`, {
+        method: 'POST'
+      });
+    }
+
+   function withdrawFromATM() {
+  const amount = parseInt(document.getElementById('atm-amount').value);
+  if (!amount || amount <= 0) {
+    playErrorSound();
+    return;
+  }
+  
+  fetch(`https://${GetParentResourceName()}/atm:withdraw`, {
+    method: 'POST',
+    body: JSON.stringify({ amount })
+  });
+  
+}
+
+
+  document.addEventListener('click', (e) => {
+   
+    const bankUI = document.getElementById('bank-ui');
+    const atmUI = document.getElementById('atm-ui');
+    const atmInnerUI = document.querySelector('#atm-ui > div');
+    const loadingContent = document.getElementById('loading-content');
+    
+    
+    if (bankUI.style.display !== 'none' && 
+        !bankUI.classList.contains('hidden') && 
+        !bankUI.contains(e.target) && 
+        loadingContent.classList.contains('hidden')) {
+      closeUI();
+    }
+    
+    if (!atmUI.classList.contains('hidden') && 
+        !atmInnerUI.contains(e.target) && 
+        loadingContent.classList.contains('hidden')) {
+      closeATMUI();
+    }
+  });
+  </script>
+</body>
+
+</html>

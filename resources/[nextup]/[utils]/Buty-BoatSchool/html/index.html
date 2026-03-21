@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+      <link rel="stylesheet" href="style.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   </head>
+   <body>
+      <div class="slider">
+         <div class="slider-inner">
+            <div class="tab mid">
+               <img src="img/BACKGROUNDCOMP1.png" alt="" class="bg" />
+               <div class="header">
+                  <img class="icon" src="img/Vector.png" alt="" />
+                  <h1><span>Vaartuig</span> bewijs</h1>
+                  <img src="img/VECTOR_WAVE.png" alt="" class="divider" />
+               </div>
+
+               <div class="license">
+                  <img src="img/BACKGROUND6.png" alt="" class="bg" />
+                  <img src="img/TITLE.png" alt="" class="title" />
+
+                  <div class="price">Prijs: <span id="total">€10.000</span></div>
+
+                  <img src="img/VECTOR_WAVE2.png" alt="" class="divider" />
+
+                  <p class="description">
+                     Van grote motorboten tot jetski's / medium, groot of juist sportief: met dit vaarbewijs mag het allemaal.
+                  </p>
+
+                  <button id="showTestPopups">SELECT</button>
+               </div>
+
+               <div class="test-popup theoratical">
+                  <img src="img/BACKGROUND7.png" alt="" class="bg" />
+                  <button id="selectTheoraticalExam">Vaartuig Theorie</button>
+                  <div class="bottom theoratical-selected">
+                     <div class="price">Prijs: <span id="theoreticalprice">€10.000</span></div>
+                     <img class="yes" src="img/APPROVED.png" alt="" />
+                     <img class="no" src="img/SUSPENSED.png" alt="" />
+                  </div>
+               </div>
+               <div class="exam-popup theoratical">
+                  <img src="img/BACKGROUND9.png" alt="" class="bg" />
+                  <p class="description">Je betaald <span id="theoraticalexamprice">€10.000</span></p>
+                  <div class="description-2">Wil je het examen starten?</div>
+                  <div class="buttons">
+                     <div class="button" id="startTheoraticalExam">Ja</div>
+                     <div class="button" id="theoreticalno">Nee</div>
+                  </div>
+               </div>
+               <div class="test-popup practical">
+                  <img src="img/BACKGROUND8.png" alt="" class="bg" />
+                  <button id="selectPracticalExam">Vaartuig Praktijkexamen</button>
+                  <div class="bottom practical-selected">
+                     <div class="price">Prijs: <span id="practicalprice">€10.000</span></div>
+                     <img class="yes" src="img/APPROVED.png" alt="" />
+                     <img class="no" src="img/SUSPENSED.png" alt="" />
+                  </div>
+               </div>
+               <div class="exam-popup practical">
+                  <img src="img/BACKGROUND9.png" alt="" class="bg" />
+                  <p class="description">Je betaald <span id="practicalexamprice">€10.000</span></p>
+                  <div class="description-2">Wil je het examen starten?</div>
+                  <div class="buttons">
+                     <div class="button" id="startPracticalExam">Ja</div>
+                     <div class="button" id="practicalno">Nee</div>
+                  </div>
+               </div>
+            </div>
+            <div class="tab top">
+               <img src="img/BACKGROUNDCOMP1.png" alt="" class="bg" />
+               <div class="header">
+                  <img src="img/Vector.png" alt="" />
+                  <div class="right">
+                     <h1><span>Vaarbewijs</span> Theorie</h1>
+                     <img src="img/VECTOR_WAVE.png" alt="" class="divider" />
+                  </div>
+               </div>
+               <div class="question">
+                  <img src="img/BACKGROUND10.png" alt="" />
+                  <div class="title"><span id="questionindex">1</span> Vraag</div>
+                  <div class="divider"></div>
+                  <div class="description" id="questiontitle">
+                     When making an emergency landing, how do you proceed if the aircraft engines are not working?
+                  </div>
+               </div>
+               <div class="choices">
+                  <img class="bgg" src="img/fondo.png" alt="" />
+                  <div class="choice a" id="firstanswer">Get nervous and punch the pilot.</div>
+                  <div class="choice b" id="secondanswer">Get nervous and punch the pilot.</div>
+                  <div class="choice c" id="thirdanswer">Get nervous and punch the pilot.</div>
+
+                  <div class="bottom">
+                     <img src="img/IMG.png" alt="" />
+                     <div class="timer">Tijd: <span id="examtime">04:40</span></div>
+                     <div class="questions">
+                        <div class="Vraag correct">1</div>
+                        <div class="Vraag onjuist">2</div>
+                        <div class="Vraag">3</div>
+                        <div class="Vraag">4</div>
+                        <div class="Vraag">5</div>
+                        <div class="Vraag">6</div>
+                        <div class="Vraag">7</div>
+                        <div class="Vraag">8</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="tab bottom">
+               <div class="header">
+                  <img src="img/BACKGROUND12.png" alt="" class="bgg" />
+                  <div class="left">
+                     <div class="head">
+                        <div class="title" id="missiontitle">1 Opdracht</div>
+                        <div class="divider"></div>
+                     </div>
+                     <img src="img/Vector.png" alt="" />
+                  </div>
+                  <div class="right" id="missiontext">Start the ship properly.</div>
+               </div>
+
+               <div class="fails">
+                  <img src="img/BACKGROUND13.png" alt="" class="bgg" />
+                  <div class="title">Tijd</div>
+
+                  <div class="value" id="missiontimer"></div>
+               </div>
+            </div>
+            <div class="tab left">
+               <img src="img/BACKGROUNDCOMP1.png" alt="" class="bg" />
+               <div class="header">
+                  <img src="img/Vector.png" alt="" />
+                  <div class="right">
+                     <h1><span>Vaarbewijs</span> Praktijk</h1>
+                     <img src="img/VECTOR_WAVE.png" alt="" class="divider" />
+                  </div>
+               </div>
+
+               <div class="container">
+                  <img src="img/COLOURBACKGROUND.png" alt="" class="bgg" />
+                  <div class="result">
+                     <img src="img/IMG_BACKGROUND.png" alt="" />
+                     <div class="main">
+                        <img src="img/BACKGROUND11.png" alt="" class="bggg" />
+                        <div class="title">Gefeliciteerd!</div>
+                        <div class="divider"></div>
+                        <div class="description">Je bent geslaagd voor dit examen.</div>
+                     </div>
+                  </div>
+                  <div class="button" id="passaccept">Ga verder</div>
+               </div>
+            </div>
+            <div class="tab right">
+               <img src="img/BACKGROUNDCOMP1.png" alt="" class="bg" />
+               <div class="header">
+                  <img src="img/Vector.png" alt="" />
+                  <div class="right">
+                     <h1><span>FLIGHT</span> LICENSE</h1>
+                     <img src="img/VECTOR_WAVE.png" alt="" class="divider" />
+                  </div>
+               </div>
+
+               <div class="container">
+                  <img src="img/COLOURBACKGROUND.png" alt="" class="bgg" />
+                  <div class="result">
+                     <img src="img/IMG_BACKGROUND.png" alt="" />
+                     <div class="main">
+                        <img src="img/BACKGROUND11.png" alt="" class="bggg" />
+                        <div class="title">Je bent gezakt!</div>
+                        <div class="divider"></div>
+                        <div class="description">Helaas heb je het examen niet gehaald, je mag het opnieuw proberen!</div>
+                     </div>
+                  </div>
+                  <div class="button" id="failaccept">Ga verder</div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script src="script.js"></script>
+   </body>
+</html>

@@ -1,0 +1,11 @@
+{
+    "wash_prompt": "Was de auto voor $%s",
+    "wash_prompt_dt": "~g~E~w~ - Was de auto voor $%s",
+    "washing": "Voertuig wordt gewassen...",
+    "canceled": "Geannuleerd...",
+    "not_dirty": "Het voertuig is niet vies",
+    "not_available": "De carwash is niet beschikbaar...",
+    "no_money": "Je hebt niet genoeg geld...",
+    "reason": "Auto Gewassen",
+    "label": "Carwash"
+}

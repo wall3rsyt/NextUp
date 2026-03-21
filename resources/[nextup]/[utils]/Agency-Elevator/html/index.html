@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nextup Lift</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== ELEVATOR PANEL ===== -->
+    <div id="elevator-app" class="hidden">
+        <div class="elevator-panel">
+            <div class="glass-bg"></div>
+            <div class="glass-shine"></div>
+            <div class="glass-noise"></div>
+
+            <div class="panel-inner">
+                <!-- Header -->
+                <div class="panel-header">
+                    <div class="header-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                            <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                            <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                            <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                            <path d="M8 12h8"/>
+                            <path d="M12 8v8"/>
+                        </svg>
+                    </div>
+                    <div class="header-text">
+                        <h1 id="elevator-name">Lift</h1>
+                        <span class="header-sub" id="current-floor-label">--</span>
+                    </div>
+                    <button class="close-btn" id="close-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Digital Display -->
+                <div class="floor-display">
+                    <div class="display-inner">
+                        <div class="display-glow"></div>
+                        <div class="direction-arrows" id="direction-indicator">
+                            <svg class="arrow arrow-up" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 4l-7 7h4.5v9h5v-9H19z"/>
+                            </svg>
+                            <svg class="arrow arrow-down" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 20l7-7h-4.5V4h-5v9H5z"/>
+                            </svg>
+                        </div>
+                        <span class="display-number" id="display-floor">--</span>
+                        <div class="display-dots" id="display-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floor Buttons -->
+                <div class="floor-list-wrapper">
+                    <div class="scroll-indicator scroll-indicator-up" id="scroll-up">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="18 15 12 9 6 15"/>
+                        </svg>
+                    </div>
+                    <div class="floor-list" id="floor-list"></div>
+                    <div class="scroll-indicator scroll-indicator-down" id="scroll-down">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="panel-footer">
+                    <div class="footer-line"></div>
+                    <span class="footer-text" id="footer-text">NEXTUP LIFT SYSTEEM</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Travel Overlay -->
+        <div class="travel-overlay hidden" id="travel-overlay">
+            <div class="travel-particles" id="travel-particles"></div>
+            <div class="travel-content">
+                <div class="travel-elevator-box">
+                    <div class="elevator-frame">
+                        <div class="frame-light"></div>
+                        <div class="elevator-doors-wrap">
+                            <div class="door door-left"></div>
+                            <div class="door door-right"></div>
+                        </div>
+                        <div class="elevator-indicator" id="elevator-indicator">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="travel-info">
+                    <span class="travel-label" id="travel-label">Op weg naar</span>
+                    <span class="travel-target" id="travel-target">--</span>
+                    <span class="travel-sub" id="travel-sub">Even geduld...</span>
+                </div>
+                <div class="travel-progress">
+                    <div class="progress-track">
+                        <div class="progress-bar" id="progress-bar"></div>
+                        <div class="progress-glow" id="progress-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CONFIGURATOR PANEL ===== -->
+    <div id="config-app" class="hidden">
+        <div class="config-panel">
+            <div class="glass-bg"></div>
+            <div class="glass-shine"></div>
+            <div class="glass-noise"></div>
+
+            <div class="panel-inner">
+                <!-- Config Header -->
+                <div class="panel-header">
+                    <div class="header-icon config-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="header-text">
+                        <h1 id="config-title">Lift Configuratie</h1>
+                        <span class="header-sub" id="config-subtitle">Maak en beheer liften</span>
+                    </div>
+                    <button class="close-btn" id="config-close-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Config Views (toggled by JS) -->
+                <div class="config-body" id="config-body">
+
+                    <!-- VIEW: Elevator List -->
+                    <div class="config-view" id="config-view-list">
+                        <div class="config-section-header">
+                            <span class="section-title" id="config-existing-label">Bestaande liften</span>
+                            <div class="config-header-actions">
+                                <button class="btn-icon btn-sm" id="config-settings-btn" title="Interface-instellingen">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                                </button>
+                                <button class="btn-primary btn-sm" id="config-new-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    <span id="config-new-label">Nieuwe lift</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="config-elevator-list" id="config-elevator-list">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- VIEW: Settings -->
+                    <div class="config-view hidden" id="config-view-settings">
+                        <button class="btn-ghost btn-sm mb-12" id="config-settings-back-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+                            <span id="config-settings-back-label">Terug</span>
+                        </button>
+
+                        <div class="settings-section">
+                            <label class="settings-label" id="settings-elevator-panel-label">Liftpaneel</label>
+                            <div class="settings-row">
+                                <span class="settings-key" id="settings-position-label">Positie</span>
+                                <div class="settings-toggle-group" id="settings-elevator-pos">
+                                    <button class="settings-toggle active" data-val="left">L</button>
+                                    <button class="settings-toggle" data-val="center">C</button>
+                                    <button class="settings-toggle" data-val="right">R</button>
+                                </div>
+                            </div>
+                            <div class="settings-row">
+                                <span class="settings-key" id="settings-scale-label">Schaal</span>
+                                <input type="range" class="settings-range" id="settings-elevator-scale" min="0.7" max="1.4" step="0.05" value="1.0" />
+                                <span class="settings-range-val" id="settings-elevator-scale-val">1.0</span>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <label class="settings-label" id="settings-config-panel-label">Configuratiescherm</label>
+                            <div class="settings-row">
+                                <span class="settings-key" id="settings-config-position-label">Positie</span>
+                                <div class="settings-toggle-group" id="settings-config-pos">
+                                    <button class="settings-toggle" data-val="left">L</button>
+                                    <button class="settings-toggle active" data-val="center">C</button>
+                                    <button class="settings-toggle" data-val="right">R</button>
+                                </div>
+                            </div>
+                            <div class="settings-row">
+                                <span class="settings-key" id="settings-config-scale-label">Schaal</span>
+                                <input type="range" class="settings-range" id="settings-config-scale" min="0.7" max="1.4" step="0.05" value="1.0" />
+                                <span class="settings-range-val" id="settings-config-scale-val">1.0</span>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <label class="settings-label" id="settings-color-label">Accentkleur</label>
+                            <div class="settings-row">
+                                <div class="settings-colors" id="settings-accent-colors">
+                                    <button class="color-swatch active" data-color="#3b82f6" style="background:#3b82f6"></button>
+                                    <button class="color-swatch" data-color="#8b5cf6" style="background:#8b5cf6"></button>
+                                    <button class="color-swatch" data-color="#ec4899" style="background:#ec4899"></button>
+                                    <button class="color-swatch" data-color="#ef4444" style="background:#ef4444"></button>
+                                    <button class="color-swatch" data-color="#f97316" style="background:#f97316"></button>
+                                    <button class="color-swatch" data-color="#eab308" style="background:#eab308"></button>
+                                    <button class="color-swatch" data-color="#22c55e" style="background:#22c55e"></button>
+                                    <button class="color-swatch" data-color="#06b6d4" style="background:#06b6d4"></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn-ghost" id="config-settings-cancel-btn"><span id="config-settings-cancel-label">Annuleren</span></button>
+                            <button class="btn-primary" id="config-settings-save-btn"><span id="config-settings-save-label">Instellingen opslaan</span></button>
+                        </div>
+                    </div>
+
+                    <!-- VIEW: Create / Edit Form -->
+                    <div class="config-view hidden" id="config-view-form">
+                        <button class="btn-ghost btn-sm mb-12" id="config-back-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+                            <span id="config-back-label">Terug</span>
+                        </button>
+
+                        <div class="form-group">
+                            <label id="config-label-label">Liftnaam</label>
+                            <input type="text" id="config-input-label" placeholder="bijv. Mijn gebouw" />
+                        </div>
+
+                        <div class="form-group">
+                            <label id="config-id-label">Lift-ID</label>
+                            <div class="input-with-lock">
+                                <input type="text" id="config-input-id" placeholder="bijv. mijn_gebouw" disabled />
+                                <button class="btn-lock" id="config-id-lock" title="Handmatig bewerken in- of uitschakelen">
+                                    <svg class="lock-icon locked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    <svg class="lock-icon unlocked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-divider"></div>
+
+                        <!-- Auto-Detect AI Section -->
+                        <div class="config-ai-section" id="config-ai-section">
+                            <button class="btn-ai" id="config-auto-detect-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/>
+                                    <path d="M17.8 11.8L19 13"/><path d="M15 9h0"/><path d="M17.8 6.2L19 5"/>
+                                    <path d="m3 21 9-9"/><path d="M12.2 6.2L11 5"/>
+                                </svg>
+                                <span class="ai-label" id="config-auto-detect-label">Verdiepingen automatisch detecteren</span>
+                                <span class="ai-badge" id="config-auto-detect-badge">Aangedreven door Nextup Lift</span>
+                            </button>
+                        </div>
+
+                        <div class="config-section-header">
+                            <span class="section-title" id="config-floors-label">Verdiepingen</span>
+                            <button class="btn-primary btn-sm" id="config-add-floor-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                <span id="config-add-floor-label">Verdieping toevoegen</span>
+                            </button>
+                        </div>
+
+                        <div class="config-floor-list" id="config-floor-list">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn-ghost" id="config-cancel-btn"><span id="config-cancel-label">Annuleren</span></button>
+                            <button class="btn-primary" id="config-save-btn"><span id="config-save-label">Lift opslaan</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="footer-line"></div>
+                    <span class="footer-text">NEXTUP LIFT SYSTEEM</span>
+                    <span class="footer-powered">Aangedreven door Nextup Lift</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+

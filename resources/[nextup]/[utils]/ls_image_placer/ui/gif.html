@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Screen Image</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+    <script>
+        window.addEventListener('message', (event) => {
+            var item = event.data;
+            if (item.type === 'gif') {
+                var imageLink = item.imageLink;
+                document.getElementById('fullScreenImage').src = imageLink;
+            }
+        });
+    </script>
+</head>
+<body>
+<img id="fullScreenImage" src="../images/simp.gif" alt="Full Screen GIF">
+</body>
+</html>

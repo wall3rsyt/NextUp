@@ -1,0 +1,28 @@
+{
+    "error": {
+        "cant_spawn_vehicle": "Er is iets misgegaan bij het spawnen van het voertuig",
+        "no_access": "Je hebt geen toegang tot dit commando."
+    },
+    "info": {
+        "weazle_overlay": "Weazel Overlay: [E]  \nFilm Overlay: [M]",
+        "weazel_news_vehicles": "Weazel News Voertuigen",
+        "close_menu": "⬅ Menu Sluiten",
+        "weazel_news_helicopters": "Weazel News Helikopters",
+        "store_vehicle": "[E] - Voertuig Opslaan",
+        "vehicles": "[E] - Voertuigen",
+        "store_helicopters": "[E] - Helikopter Opslaan",
+        "helicopters": "[E] - Helikopters",
+        "enter": "[E] - Binnengaan",
+        "go_outside": "[E] - Naar buiten gaan",
+        "roof_enter": "[E] - Dak betreden",
+        "roof_exit": "[E] - Dak verlaten",
+        "breaking_news": "BREAKING NEWS",
+        "title_breaking_news": "Weazel Vandaag - Breaking News Exclusief",
+        "bottom_breaking_news": "Wij brengen u het LAATSTE NIEUWS live terwijl het gebeurt",
+        "newscam": "Pak een nieuwscamera",
+        "newsmic": "Pak een nieuwsmicrofoon",
+        "newsbmic": "Pak een Boom microfoon",
+        "news_plate": "WZNW",
+        "blip_name": "Weazel News"
+    }
+}

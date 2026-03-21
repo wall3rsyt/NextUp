@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ─── CSS Variables ─────────────────────────────────────────────────────────── */
+:root {
+    --title-color:      #f8fafc;
+    --switch-off-color: #ef4444;
+    --switch-on-color:  #10b981;
+    --highlight-color:  #60a5fa;
+
+    --panel-bg:         linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    --header-bg:        linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --border:           rgba(255, 255, 255, 0.1);
+    --surface:          rgba(15, 23, 42, 0.6);
+
+    --radius-panel: 16px;
+    --radius-inner:  8px;
+    --shadow-panel:
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px var(--border);
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: transparent;
+    overflow: hidden;
+}
+
+.hidden { display: none !important; }
+
+/* ─── Shared overlay ────────────────────────────────────────────────────────── */
+#container,
+#configContainer {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ─── Shared panel base ─────────────────────────────────────────────────────── */
+.panel,
+.config-panel {
+    background: var(--panel-bg);
+    border-radius: var(--radius-panel);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-panel);
+    padding: 0;
+    animation: slideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.panel     { min-width: 400px; }
+.config-panel {
+    width: 90vw;
+    max-width: 1000px;
+    max-height: 85vh;
+    overflow: hidden;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: scale(0.9) translateY(-20px); }
+    to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+
+/* ─── Header ────────────────────────────────────────────────────────────────── */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 32px;
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border);
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+}
+
+.header h2 {
+    color: var(--title-color);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* ─── Close button ──────────────────────────────────────────────────────────── */
+.close-btn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.close-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    transform: scale(1.1);
+}
+
+/* ─── Main panel content ────────────────────────────────────────────────────── */
+.content { padding: 32px; }
+
+.switch-container { margin-bottom: 32px; }
+
+.switch-label {
+    display: block;
+    color: #e2e8f0;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.switch-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.switch-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 32px;
+    text-align: center;
+    transition: color 0.3s;
+}
+.switch-text.off { color: var(--switch-off-color); }
+.switch-text.on  { color: var(--switch-on-color);  }
+
+/* ─── Toggle switch ─────────────────────────────────────────────────────────── */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 32px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    background: linear-gradient(135deg, #374151, #4b5563);
+    border: 2px solid #6b7280;
+    border-radius: 32px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s,
+                box-shadow 0.3s;
+}
+.slider::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    left: 2px;
+    bottom: 2px;
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background 0.3s;
+}
+
+input:checked + .slider {
+    background: linear-gradient(135deg, #059669, #10b981);
+    border-color: #10b981;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1),
+                0 0 20px rgba(16, 185, 129, 0.3);
+    animation: switchGlow 0.3s ease;
+}
+input:checked + .slider::before {
+    transform: translateX(28px);
+    background: linear-gradient(135deg, #fff, #f0fdf4);
+}
+
+@keyframes switchGlow {
+    0%   { box-shadow: inset 0 2px 4px rgba(0,0,0,.1); }
+    50%  { box-shadow: inset 0 2px 4px rgba(0,0,0,.1), 0 0 25px rgba(16,185,129,.5); }
+    100% { box-shadow: inset 0 2px 4px rgba(0,0,0,.1), 0 0 20px rgba(16,185,129,.3); }
+}
+
+/* ─── Info box ──────────────────────────────────────────────────────────────── */
+.info {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.info p {
+    color: #cbd5e1;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.info p:last-child { margin-bottom: 0; }
+
+.highlight {
+    color: var(--highlight-color);
+    font-weight: 600;
+}
+
+/* ─── Config panel content ──────────────────────────────────────────────────── */
+.config-content {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-height: calc(85vh - 80px);
+    overflow-y: auto;
+}
+
+.config-section h3 {
+    color: #f8fafc;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.input-group { margin-bottom: 18px; }
+
+.input-group label {
+    display: block;
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.input-group input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-inner);
+    color: #f8fafc;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-group input[type="text"]:focus {
+    outline: none;
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.input-group input[type="color"] {
+    width: 60px;
+    height: 40px;
+    padding: 4px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-inner);
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+.input-group input[type="color"]:hover { border-color: var(--highlight-color); }
+
+/* ─── Config buttons ────────────────────────────────────────────────────────── */
+.config-buttons {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.config-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--radius-inner);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    min-width: 120px;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.config-btn.save {
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #fff;
+}
+.config-btn.save:hover {
+    background: linear-gradient(135deg, #047857, #059669);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.config-btn.reset {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    color: #fff;
+}
+.config-btn.reset:hover {
+    background: linear-gradient(135deg, #b91c1c, #dc2626);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}

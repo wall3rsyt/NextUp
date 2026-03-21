@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pauzemenu</title>
+   
+    <!-- Preconnect naar externe domeinen voor snellere laadtijd -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+   
+    <!-- Preload kritieke fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" as="style">
+   
+    <!-- Fonts laden met display=swap voor snellere tekstweergave -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+   
+    <!-- Font Awesome - asynchroon laden -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+   
+    <!-- Hoofd stylesheet -->
+    <link rel="stylesheet" href="style.css">
+   
+    <!-- Kritieke inline styles voor directe eerste weergave -->
+    <style>
+        .pause-menu.hidden { display: none !important; }
+        body { font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; overflow: hidden; }
+    </style>
+</head>
+<body>
+    <div id="pause-menu" class="pause-menu hidden">
+       
+        <div class="menu-wrapper">
+           
+            <!-- HEADER -->
+            <header class="menu-header">
+                <!-- Achtergrond elementen -->
+                <div class="header-bg">
+                    <div class="header-gradient"></div>
+                    <div class="header-grid"></div>
+                    <div class="header-glow"></div>
+                </div>
+               
+                <!-- Links - Logo & Servernaam -->
+                <div class="header-brand">
+                    <div class="brand-logo">
+                        <div class="logo-glow"></div>
+                        <div class="logo-border"></div>
+                        <img src="img/logo.png" alt="Logo" class="logo-img" id="server-logo">
+                        <div class="logo-fallback"><i class="fas fa-gamepad"></i></div>
+                    </div>
+                    <div class="brand-info">
+                        <h1 class="brand-name" id="server-name">KYROS</h1>
+                        <div class="brand-tagline">
+                            <div class="tagline-decorator"></div>
+                            <span>ROLEPLAY</span>
+                            <div class="tagline-decorator"></div>
+                        </div>
+                    </div>
+                </div>
+               
+                <!-- Rechts - Statistieken -->
+                <div class="header-stats">
+                    <div class="stat-card players">
+                        <div class="stat-card-bg"></div>
+                        <div class="stat-card-glow"></div>
+                        <div class="stat-icon-wrap">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-data">
+                            <span class="stat-number" id="player-count">0</span>
+                            <span class="stat-title">Spelers</span>
+                        </div>
+                        <div class="stat-live-dot"></div>
+                    </div>
+                   
+                    <div class="stat-card time">
+                        <div class="stat-card-bg"></div>
+                        <div class="stat-icon-wrap">
+                            <i class="far fa-clock"></i>
+                        </div>
+                        <div class="stat-data">
+                            <span class="stat-number" id="server-time">00:00</span>
+                            <span class="stat-title">Tijd</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- HOOFDCONTENT -->
+            <div class="menu-content">
+               
+                <!-- LINKS - Speler Info -->
+                <div class="card player-card">
+                    <div class="card-grid"></div>
+                    <div class="card-gradient"></div>
+                    <div class="card-border"></div>
+                   
+                    <div class="card-header">
+                        <i class="fas fa-user"></i>
+                        <span>Speler Informatie</span>
+                    </div>
+                   
+                    <div class="card-body">
+                        <div class="player-header">
+                            <div class="avatar">
+                                <div class="avatar-glow"></div>
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="player-details">
+                                <span class="player-name" id="player-name">Speler Naam</span>
+                                <div class="player-id-badge">
+                                    <span>ID</span>
+                                    <span id="player-id">0</span>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="stats-list">
+                            <div class="stat-item">
+                                <div class="stat-icon job"><i class="fas fa-briefcase"></i></div>
+                                <div class="stat-content">
+                                    <span class="label">Baan</span>
+                                    <span class="value" id="player-job">Burger</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon cash"><i class="fas fa-wallet"></i></div>
+                                <div class="stat-content">
+                                    <span class="label">Contant</span>
+                                    <span class="value green" id="player-cash">€0</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon bank"><i class="fas fa-building-columns"></i></div>
+                                <div class="stat-content">
+                                    <span class="label">Bank</span>
+                                    <span class="value blue" id="player-bank">€0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MIDDEN - Kaart -->
+                <div class="map-card" data-action="openMap">
+                    <img src="img/map.jpg" alt="Kaart" class="map-bg-image" id="map-image">
+                    <div class="map-bg-overlay"></div>
+                    <div class="player-marker" id="player-marker">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot"></div>
+                    </div>
+                   
+                    <!-- Locatie overlay -->
+                    <div class="location-overlay">
+                        <div class="location-top">
+                            <div class="location-badge">
+                                <i class="fas fa-location-dot"></i>
+                                <span>LOCATIE</span>
+                            </div>
+                            <div class="heading-badge">
+                                <i class="fas fa-compass"></i>
+                                <span id="heading">N</span>
+                            </div>
+                        </div>
+                       
+                        <div class="location-bottom">
+                            <div class="street-info">
+                                <span class="street-name" id="street-name">Laden...</span>
+                                <span class="zone-name" id="zone-name">Los Santos</span>
+                            </div>
+                            <button class="map-btn" data-action="openMap">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RECHTS - Acties -->
+                <div class="card actions-card">
+                    <div class="card-grid"></div>
+                    <div class="card-gradient"></div>
+                    <div class="card-border"></div>
+                   
+                    <div class="card-header">
+                        <i class="fas fa-bars"></i>
+                        <span>Menu</span>
+                    </div>
+                   
+                    <div class="card-body">
+                        <div class="action-list">
+                            <button class="action-btn" data-action="openSettings">
+                                <div class="btn-bg"></div>
+                                <div class="btn-icon"><i class="fas fa-gear"></i></div>
+                                <span>Instellingen</span>
+                                <div class="btn-arrow"><i class="fas fa-chevron-right"></i></div>
+                            </button>
+                           
+                            <button class="action-btn" data-action="openRules">
+                                <div class="btn-bg"></div>
+                                <div class="btn-icon"><i class="fas fa-scale-balanced"></i></div>
+                                <span>Serverregels</span>
+                                <div class="btn-arrow"><i class="fas fa-chevron-right"></i></div>
+                            </button>
+                           
+                            <button class="action-btn" data-action="openDiscord">
+                                <div class="btn-bg"></div>
+                                <div class="btn-icon discord"><i class="fab fa-discord"></i></div>
+                                <span>Discord</span>
+                                <div class="btn-arrow"><i class="fas fa-external-link-alt"></i></div>
+                            </button>
+                           
+                            <button class="action-btn" data-action="openWebsite">
+                                <div class="btn-bg"></div>
+                                <div class="btn-icon"><i class="fas fa-globe"></i></div>
+                                <span>Website</span>
+                                <div class="btn-arrow"><i class="fas fa-external-link-alt"></i></div>
+                            </button>
+                           
+                            <button class="action-btn danger" data-action="disconnect">
+                                <div class="btn-bg"></div>
+                                <div class="btn-icon danger"><i class="fas fa-power-off"></i></div>
+                                <span>Verlaten</span>
+                                <div class="btn-arrow"><i class="fas fa-chevron-right"></i></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="menu-footer">
+                <div class="footer-left">
+                    <div class="keybind">
+                        <span class="key">ESC</span>
+                        <span>Menu sluiten</span>
+                    </div>
+                </div>
+                <div class="footer-center">
+                    <div class="footer-stats">
+                        <span class="footer-stat">
+                            <i class="fas fa-signal"></i>
+                            <span class="footer-stat-value" id="player-ping">--</span>
+                            <span class="footer-stat-label">ping</span>
+                        </span>
+                        <span class="footer-divider">|</span>
+                        <span class="footer-stat">
+                            <i class="fas fa-clock"></i>
+                            <span class="footer-stat-value" id="session-time">0m</span>
+                            <span class="footer-stat-label">gespeeld</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <span class="version">v1.0.0</span>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Regels Modal -->
+        <div id="rules-modal" class="modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-box rules-modal">
+                <div class="modal-header">
+                    <i class="fas fa-scale-balanced"></i>
+                    <h2>Serverregels</h2>
+                    <button class="close-btn" data-action="closeRules"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body" id="rules-list">
+                    <!-- Regels worden dynamisch geladen vanuit config.lua -->
+                </div>
+                <div class="rules-footer">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Overtreden van regels kan leiden tot waarschuwingen of bans</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Verlaten Modal -->
+        <div id="disconnect-modal" class="modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-box small">
+                <div class="modal-icon"><i class="fas fa-power-off"></i></div>
+                <h2>Server verlaten?</h2>
+                <p>Weet je zeker dat je wilt disconnecten?</p>
+                <div class="modal-buttons">
+                    <button class="btn cancel" data-action="cancelDisconnect">Annuleren</button>
+                    <button class="btn confirm" data-action="confirmDisconnect">Verlaten</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{
+    "notify": {
+        "cannot_leave": "Je kunt het servicegebied niet verlaten!",
+        "already_in_service": "Speler is al bezig met taakstraf",
+        "sent_to_service": "Speler %s is naar taakstraf gestuurd",
+        "been_sent_to_service": "Je bent naar taakstraf gestuurd door %s",
+        "service_completed": "Je hebt je taakstraf voltooid",
+        "tasks_remaining": "%d taken resterend",
+        "escape_penalty": "Straf toegevoegd voor ontsnappingspoging! %s taken toegevoegd",
+        "player_not_in_service": "Speler is niet langer bezig met taakstraf",
+        "player_released": "%s is vrijgelaten uit taakstraf",
+        "service_updated": "Taakstraf bijgewerkt voor %s",
+        "invalid_player": "Ongeldig speler-ID",
+        "invalid_identifier": "Ongeldige identifier opgegeven",
+        "offline_service_assigned": "Taakstraf toegewezen aan offline speler met identifier: %s",
+        "items_saved": "Voorwerpen succesvol opgeslagen",
+        "offline_player_released": "Offline speler vrijgelaten uit taakstraf",
+        "offline_service_updated": "Taakstraf van offline speler bijgewerkt",
+        "invalid_service_data": "Ongeldige taakstraf-gegevens"
+    },
+    "ui": {
+        "service_info": "Taakstraf Informatie",
+        "admin_label": "Beheerder",
+        "tasks_label": "Resterende Taken",
+        "reason_label": "Reden",
+        "update_service": "Taakstraf Bijwerken",
+        "player_id_input": {
+            "label": "Speler-ID"
+        },
+        "player_identifier": "Speler Identifier",
+        "tasks_input": {
+            "label": "Resterende Taken",
+            "description": "Aantal resterende taken"
+        },
+        "reason_input": {
+            "label": "Reden",
+            "description": "Reden voor de taakstraf"
+        },
+        "release_button": "Vrijlaten uit Taakstraf",
+        "release_description": "Speler direct vrijlaten uit taakstraf",
+        "update_button": "Taakstraf Bijwerken",
+        "update_description": "Aantal taken en reden wijzigen",
+        "services_title": "Taakstraf Beheer",
+        "no_players": "Geen spelers momenteel in taakstraf",
+        "player_entry": "%s - %d taken",
+        "player_description": "Reden: %s | Beheerder: %s",
+        "status_online": "Online",
+        "status_offline": "Offline",
+        "manage_items": "Voorwerpen Beheren",
+        "manage_items_description": "Bewerk de inbeslaggenomen voorwerpen van de speler",
+        "manage_player": "%s Beheren",
+        "service_task": "Taakstraf Opdracht",
+        "task_action": "[E] - %s",
+        "status_label": "Status"
+    },
+    "nui": {
+        "title": "Taakstraf",
+        "assigned_by": "Toegewezen door",
+        "admin": "%s",
+        "reason_label": "Reden",
+        "reason": "%s",
+        "progress_label": "Voortgang",
+        "tasks": "%d/%d taken"
+    },
+    "dialog": {
+        "title": "Taakstraf Toewijzen",
+        "type": "Doeltype",
+        "type_id": "Speler-ID",
+        "type_identifier": "Identifier",
+        "target": "Doel",
+        "target_desc": "Voer een speler-ID of identifier in op basis van de selectie hierboven",
+        "amount": "Aantal Taken",
+        "amount_desc": "Hoeveel taken er toegewezen moeten worden",
+        "reason": "Reden",
+        "reason_desc": "Reden voor de taakstraf"
+    }
+}

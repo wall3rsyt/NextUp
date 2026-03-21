@@ -1,0 +1,8 @@
+{
+    "not_payout_for_you": "Ik heb geen uitbetaling voor jou",
+    "wait": "Wacht even",
+    "not_enough_hours": "Je hebt geen gewerkte uren",
+    "society_dont_have_money": "Het bedrijfsaccount heeft niet genoeg geld",
+    "cant_fetch_society": "Het ophalen van geld uit het bedrijfsaccount is mislukt",
+    "taken_payout": "Je hebt een uitbetaling ontvangen van $ %s voor %s uur"
+}

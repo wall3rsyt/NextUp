@@ -1,0 +1,34 @@
+{
+    "join_notify_description": "Verbonden met %.2f MHz",
+    "invalid_notify_description": "Frequentie %.2f MHz is niet beschikbaar",
+    "already_notify_description": "Je bent al verbonden met %.2f MHz",
+    "restricted_notify_description": "Je mag niet verbinden met %.2f MHz",
+    "volume_notify_description": "Volume staat nu op %d%%",
+    "unsuccess_name": "Naam wijzigen mislukt",
+    "jammer_notify_description": "Kan niet verbinden met %.2f MHz",
+    "toggle_defean": "Radio gedempt",
+    "toggle_undeafen": "Radio weer aan",
+    "failed_mute": "Speler muten mislukt",
+
+    "ui": {
+        "header": "IN RADIO",
+        "frequency": "Frequentie",
+        "disconnect": "VERBREKEN",
+        "notconnected": "NIET VERBONDEN",
+        "settings": "Instellingen",
+        "channels": "Kanalen",
+        "radio": "Radio",
+        "members": "Leden",
+        "favorites": "Favorieten",
+        "recommended": "Aanbevolen",
+        "clear": "WISSEN",
+        "hide_overlay": "OVERLAY VERBERGEN",
+        "show_overlay": "OVERLAY TONEN",
+        "save": "OPSLAAN",
+        "radio_settings": "Radio Instellingen",
+        "move_radio": "Radio verplaatsen",
+        "allow_move": "Verplaatsen toestaan",
+        "overlay_settings": "Overlay Instellingen",
+        "enableClicks": "Radioklikgeluiden"
+    }
+}

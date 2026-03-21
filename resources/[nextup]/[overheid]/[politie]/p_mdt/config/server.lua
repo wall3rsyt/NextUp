@@ -1,0 +1,1 @@
+DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1481316931117252629/DSlO4BD3ioeE8bUUNdBJuci7vMOo9OJokbefpNswDCxVCyL-21N3U0C73IXNqzIodSst' -- paste webhook here for discord logs

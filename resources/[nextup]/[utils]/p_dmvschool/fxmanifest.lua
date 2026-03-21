@@ -1,0 +1,38 @@
+shared_script '@rola-lore-friendly-pack-v2-RESOURCE-FOUR/init.lua'
+fx_version 'cerulean'
+game 'gta5'
+author 'pScripts [tebex.pscripts.store]'
+description 'Advanced DMV School with Creator'
+version '1.0.5'
+lua54 'yes'
+
+ui_page 'web/build/index.html'
+
+client_script "client/**/*"
+server_scripts {
+  '@oxmysql/lib/MySQL.lua',
+  "server/**/*"
+}
+
+files {
+	'web/build/index.html',
+	'web/build/**/*',
+  'locales/*.json'
+}
+
+dependencies {
+  'ox_lib',
+  'p_bridge'
+}
+
+shared_scripts {
+  '@ox_lib/init.lua',
+  'config.lua'
+}
+
+escrow_ignore {
+  'config.lua',
+  'server/editable.lua',
+  'client/editable.lua'
+}
+dependency '/assetpacks'

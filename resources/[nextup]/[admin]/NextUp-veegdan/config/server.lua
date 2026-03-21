@@ -1,0 +1,47 @@
+return {
+    confiscateItems = true,
+    taskSpots = {
+        vec3(1628.29, 2500.48, 45.6),
+        vec3(1640.58, 2513.49, 45.6),
+        vec3(1656.20, 2520.62, 45.6),
+        vec3(1669.09, 2517.21, 45.6),
+        vec3(1657.43, 2505.08, 45.6),
+        vec3(1643.33, 2498.08, 45.6),
+        vec3(1677.58, 2494.06, 45.6),
+        vec3(1692.81, 2484.77, 45.6),
+        vec3(1701.06, 2497.13, 45.6),
+        vec3(1699.95, 2516.41, 45.6),
+        vec3(1714.22, 2509.12, 45.6),
+        vec3(1720.01, 2495.60, 45.6),
+        vec3(1703.98, 2486.41, 45.6),
+        vec3(1687.74, 2502.53, 45.6),
+        vec3(1664.87, 2499.19, 45.6)
+    },
+    logging = {
+        enabled = false,
+        system = 'ox_lib', -- ox_lib (aanbevolen) of discord (niet aanbevolen)
+
+        name = 'Peak Scripts',
+        image = 'https://r2.fivemanage.com/mRGMLnWSeQJ90gOfps6Wt/peakscripts.png',
+        webhookUrl = ''
+    },
+    commands = {
+        services = {
+            name = 'taakstraf',
+            help = 'Bekijk en beheer spelers in taakstraf',
+            restricted = 'group.admin'
+        },
+
+        comserv = {
+            name = 'taakstraf',
+            help = 'Wijs een speler taakstraf toe',
+            restricted = 'group.admin'
+        },
+
+        removecomserv = {
+            name = 'vrijlaten',
+            help = 'Verwijder een speler uit taakstraf',
+            restricted = 'group.admin'
+        }
+    }
+}

@@ -1,0 +1,183 @@
+# 🎬 Drive-In Light Controller - Detailed Documentation
+
+## 📋 Overview
+
+Drive-In Light Controller is an advanced FiveM script that allows you to control lights at a drive-in cinema map location. The script features a modern UI with full customization options and ACE permissions for security.
+
+## ✨ Features
+
+* 🎛️ **Modern UI** – Elegant and responsive user interface
+* 🔧 **Fully Configurable** – Customize all texts and colors
+* 🔐 **ACE Permissions** – Advanced security system
+* 🌐 **Multiplayer Sync** – Synchronization between all players
+* 🎨 **Live Customization** – Real-time UI adjustments
+* 🐛 **Debug System** – Debug message control
+
+## 📦 Installation
+
+### Step 1: Download & Setup
+
+```
+1. Download the script
+2. Extract it into your resources folder
+
+```
+
+### Step 2: Add to server.cfg
+
+```cfg
+# Add this to the end of your server.cfg
+ensure cfx-nteam-driveinlights
+```
+
+### Step 3: Configure Permissions
+
+Add permissions to your `server.cfg` (**REQUIRED**):
+
+```cfg
+# ===== DRIVE-IN CONTROLLER PERMISSIONS =====
+
+# Admin group - all permissions
+add_ace group.admin drivein.useUI allow
+add_ace group.admin drivein.useConfig allow
+
+# God group - all permissions
+add_ace group.god drivein.useUI allow
+add_ace group.god drivein.useConfig allow
+
+# Moderator group - ui lights on/off functions only
+add_ace group.mod drivein.useUI allow
+
+# ===== SPECIFIC PLAYERS =====
+# Replace IDs with actual player identifiers
+
+# Steam ID (Example: 76561198000000000)
+add_ace identifier.steam:76561198000000000 drivein.useUI allow
+add_ace identifier.steam:76561198000000000 drivein.useConfig allow
+
+# Rockstar License (Example: abcd1234efgh5678)
+add_ace identifier.license:abcd1234efgh5678 drivein.useUI allow
+add_ace identifier.license:abcd1234efgh5678 drivein.useConfig allow
+
+# Discord ID (Example: 123456789012345678)
+add_ace identifier.discord:123456789012345678 drivein.useUI allow
+add_ace identifier.discord:123456789012345678 drivein.useConfig allow
+
+# Xbox Live ID (Example: 2535412345678901)
+add_ace identifier.xbl:2535412345678901 drivein.useUI allow
+add_ace identifier.xbl:2535412345678901 drivein.useConfig allow
+
+# Microsoft Live ID (Example: 914000000000000)
+add_ace identifier.live:914000000000000 drivein.useUI allow
+add_ace identifier.live:914000000000000 drivein.useConfig allow
+
+# FiveM ID (Example: 123456)
+add_ace identifier.fivem:123456 drivein.useUI allow
+add_ace identifier.fivem:123456 drivein.useConfig allow
+
+# License2 (Example: wxyz9876stuv5432)
+add_ace identifier.license2:wxyz9876stuv5432 drivein.useUI allow
+add_ace identifier.license2:wxyz9876stuv5432 drivein.useConfig allow
+```
+
+
+
+## 🎮 Usage
+
+### Commands
+
+| Command     | Description                        | Required Permission |
+| ----------- | ---------------------------------- | ------------------- |
+| `/dc`       | Opens the main light control panel | `drivein.useUI`     |
+| `/dcconfig` | Opens the UI configuration panel   | `drivein.useConfig` |
+
+### UI Controls
+
+* **ESC** – Close any open panel
+* **Click outside the panel** – Close panel
+* **Toggle Switch** – Turn lights on/off
+* **X Button** – Close panel
+
+
+### In-Game UI Configuration
+
+1. **Open config panel**: `/dcconfig`
+2. **Edit texts**: Enter new text in the fields
+3. **Edit colors**: Use the color pickers
+4. **Save changes**: Click "Save Changes"
+5. **Reset to default**: Click "Reset to Default"
+
+**Note**: Changes apply instantly and persist for the current session.
+
+## 🔐 Permissions – Detailed Explanation
+
+### Permission Types
+
+| Permission          | Description                            | Who Needs It       |
+| ------------------- | -------------------------------------- | ------------------ |
+| `drivein.useUI`     | Access to the main light control panel | Admins, Moderators |
+| `drivein.useConfig` | Access to the UI configuration panel   | Admins only        |
+
+
+### Testing Permissions
+
+1. **Start the server** with debug mode (`Config.Debug = true`)
+2. **Connect as a player**
+3. **Try commands** `/dc` and `/dcconfig`
+4. **Check console** for debug messages
+5. **If missing permissions**, add them to server.cfg and restart
+
+## 🛠️ Troubleshooting
+
+### Problem: "You don't have permission"
+
+**Solution:**
+
+```
+1. Check if you added the permissions in server.cfg
+2. Restart the server after adding permissions
+3. Verify that the identifier is correct
+4. Enable debug mode (Config.Debug = true) for more info
+```
+
+### Problem: UI not opening
+
+**Solution:**
+
+```
+1. Check F8 console for errors
+2. Ensure all files are present
+3. Restart the script
+4. Check your permissions
+```
+
+
+## 🔧 Advanced Options
+
+### Debug Mode
+
+```lua
+-- In config.lua
+Config.Debug = true  -- Shows detailed console messages
+Config.Debug = false -- Disables all debug messages
+```
+
+### Export Functions (For other scripts)
+
+-- Check lights status
+local lightsOn = exports['drivein-controller']:getLightsState()
+
+-- Change lights state
+exports['drivein-controller']:setLightsState(true)  -- Enable
+exports['drivein-controller']:setLightsState(false) -- Disable
+
+
+## 📞 Support
+
+If you encounter issues:
+
+1. **Check the console** for errors
+2. **Enable debug mode** (`Config.Debug = true`)
+3. **Verify your permissions**
+4. **Open ticket on our discord server**
+

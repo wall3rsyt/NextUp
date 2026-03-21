@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GreenZone</title>
+    <script src="https://kit.fontawesome.com/9f69eba8e4.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #displayTextContainer {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: auto;
+            min-width: 240px;
+            max-width: 320px;
+            padding: 16px 24px;
+            background: linear-gradient(160deg, rgba(40, 30, 10, 0.92), rgba(20, 15, 5, 0.95));
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.15), 0 4px 15px rgba(0,0,0,0.6);
+            text-align: center;
+        }
+
+        .cross-divider {
+            color: rgba(212, 175, 55, 0.7);
+            font-size: 16px;
+            margin: 6px 0;
+            letter-spacing: 8px;
+        }
+
+        .zone-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #D4AF37;
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .zone-status {
+            font-size: 12px;
+            color: #c8b97a;
+            font-style: italic;
+            margin: 2px 0 6px 0;
+        }
+
+        .divider {
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.5), transparent);
+            margin: 6px auto;
+        }
+
+        .discord-link {
+            font-size: 11px;
+            color: #7289DA;
+            text-decoration: none;
+            opacity: 0.85;
+            transition: opacity 0.2s;
+        }
+
+        .discord-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="displayTextContainer">
+        <p class="cross-divider">✝ ✝ ✝</p>
+        <p class="zone-title" id="zoneTitle">Green Zone</p>
+        <p class="zone-status">Heilige grond — vrede zij met u</p>
+        <div class="divider"></div>
+        <a class="discord-link" id="discordLink" href="#" target="_blank">
+            <i class="fab fa-discord"></i> <span id="discordSpan">discord.gg/NextUP</span>
+        </a>
+    </div>
+
+    <script>
+        var container   = document.getElementById('displayTextContainer')
+        var zoneTitle   = document.getElementById('zoneTitle')
+        var discordSpan = document.getElementById('discordSpan')
+        var discordLink = document.getElementById('discordLink')
+
+        window.addEventListener('message', function(event) {
+            var data = event.data
+            if (!data || data.type !== 'displayText') return
+
+            if (data.display) {
+                zoneTitle.innerText   = data.gangshitrzText || 'Green Zone'
+                discordSpan.innerText = data.discordText || 'discord.gg/NextUP'
+                discordLink.href      = 'https://' + (data.discordText || 'discord.gg/NextUP')
+                container.style.display = 'flex'
+            } else {
+                container.style.display = 'none'
+            }
+        })
+    </script>
+</body>
+</html>

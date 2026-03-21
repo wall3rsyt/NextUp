@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+         
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+            .sale-sign-dui {
+                position: absolute;
+                font-family: 'Source Sans 3', sans-serif;
+                top: 0;
+                left: 0;
+                width: 512px;
+                height: 512px;
+                background: #000000;
+                color: rgb(14, 14, 14);
+            }
+
+            .sale-sign-dui > .carton-txt {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url(./carton_txt.webp);
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                opacity: 0.05;
+                z-index: 1000;
+            }
+
+            .sale-sign-dui::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url(./dirt_effect.webp);
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                z-index: 0;
+                opacity: 0.2;
+            }
+
+            .sale-sign-dui .big {
+                position: absolute;
+                height: 300px;
+                width: 486px;
+                margin-top: 18px;
+                margin-left: 10px;
+                font-size: 35px;
+                font-weight: 600;
+                text-align: center;
+                transform: rotateY(20deg);
+            }
+
+            .sale-sign-dui .big .title {
+                color: white;
+                font-size: 65px;
+                font-weight: 700;
+                margin-bottom: 18px;
+            }
+
+            .sale-sign-dui .big .main_price {
+                font-size: 79px;
+                font-weight: 700;
+                line-height: 1.1;
+            }
+
+            .sale-sign-dui .big .second_price {
+                font-size: 32px;
+                font-weight: 700;
+                line-height: 1.1;
+            }
+
+            .sale-sign-dui .big .second_price > span {
+                font-size: 20px;
+            }
+
+            .sale-sign-dui .small {
+                position: absolute;
+                bottom: 9px;
+                height: 145px;
+                width: 486px;
+                padding-top: 32px;
+                font-size: 60px;
+                font-weight: 600;
+                text-align: center;
+                transform: rotateY(60deg);
+            }
+
+            .sale-sign-dui .bg {
+                background: #ffffff;
+                border-radius: 100%;
+                width: 900px;
+                margin-top: 110px;
+                margin-left: -200px;
+                height: 500px;
+            }
+        </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            function formatNumber(value, min, max) {
+                return new Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: min,
+                    maximumFractionDigits: max
+                }).format(value);
+            }
+
+            String.prototype.format = function () {
+                var formatted = this;
+                for (var i = 0; i < arguments.length; i++) {
+                    var regexp = new RegExp('\\{' + i + '\\}', 'gi');
+                    formatted = formatted.replace(regexp, arguments[i]);
+                }
+                return formatted;
+            };
+            
+            window.addEventListener("load", function () {
+                $.post(`https://vms_housing/saleSign:init`)
+            })
+            
+            window.addEventListener('message', function (event) {
+                var item = event.data;
+                if (item.action === 'SaleSign') {
+                    SaleSign[item.actionName](item);
+                }
+            })
+
+            const SaleSign = {
+                Load: function(data) {
+                    const $sign   = $('.sale-sign-dui');
+                    const $big    = $sign.find('.big');
+                    const $small  = $sign.find('.small');
+
+                    const $title  = $big.find('.title');
+                    const $main   = $big.find('.main_price');
+                    const $second = $big.find('.second_price');
+
+                    const fmt = (v) => formatNumber(v);
+                    const clearPrices = () => {
+                        $main.empty();
+                        $second.empty();
+                    };
+                    
+                    if (data.color) {
+                        $sign.css('background', data.color);
+                    }
+
+                    if (data.isForSale) {
+                        $title.text(data.content.for_sale);
+                    } else if (data.isForRent) {
+                        $title.text(data.content.for_rent);
+                    } else {
+                        $title.text('');
+                    }
+
+                    clearPrices();
+
+                    if (data.isForSale && data.purchasePrice) {
+                        $main.html(data.content.price.format(fmt(data.purchasePrice)));
+
+                        if (data.isForRent) {
+                            if (data.rentalPriceWeekly) {
+                                $second.append(
+                                    `${data.content.rent_weekly.format(fmt(data.rentalPriceWeekly))}<br>`
+                                );
+                            }
+                            if (data.rentalPriceMonthly) {
+                                $second.append(
+                                    `${data.content.rent_monthly.format(fmt(data.rentalPriceMonthly))}<br>`
+                                );
+                            }
+                        }
+                    } else if (data.isForRent) {
+                        if (data.rentalPriceWeekly) {
+                            $main.html(
+                                `${data.content.rent_weekly.format(fmt(data.rentalPriceWeekly))}`
+                            );
+
+                            if (data.rentalPriceMonthly) {
+                                $second.html(
+                                    `${data.content.rent_monthly.format(fmt(data.rentalPriceMonthly))}`
+                                );
+                            }
+                        }
+                        else if (data.rentalPriceMonthly) {
+                            $main.html(
+                            `${data.content.rent_monthly.format(fmt(data.rentalPriceMonthly))}`
+                            );
+                        }
+                    }
+
+                    if (data.contactNumber) {
+                        $small.html(
+                            `<i class="fa-solid fa-phone"></i> ${data.contactNumber}`
+                        );
+                    } else if (data.agencyName) {
+                        $small.html(
+                            `<i class="fa-solid fa-building"></i> ${data.agencyName}`
+                        );
+                    } else {
+                        $small.empty();
+                    }
+                },
+            }
+        </script>
+    </head>
+
+    <body id="body">
+        <div class="sale-sign-dui">
+            <div class="carton-txt"></div>
+            <div class="big">
+                <div class="title"></div>
+                <div class="main_price"></div>
+                <div class="second_price"></div>
+            </div>
+            <div class="small"></div>
+            <div class="bg"></div>
+        </div>
+    </body>
+</html>
